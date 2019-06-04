@@ -25,7 +25,7 @@ public class EmployeeManagerApplicationTests {
     @Test
     public void givenDefaultPage_whenUserLoadsIt_then200IsCreated() throws ClientProtocolException, IOException {
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet httpGet = new HttpGet("http://localhost:3000/index");
+        HttpGet httpGet = new HttpGet("http://localhost:5000/index");
         httpGet.setHeader("Content-type", "application/json");
 
         CloseableHttpResponse response = client.execute(httpGet);
