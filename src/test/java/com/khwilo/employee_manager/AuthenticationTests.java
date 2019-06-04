@@ -40,4 +40,25 @@ public class AuthenticationTests {
         assertEquals(result.get("status").getAsInt(), 201);
         assertEquals(result.get("message").getAsString(), "Employee account creation is successful!");
     }
+
+    @Test
+    public void givenEmployeeDoesExist_whenAnEmployeeLogsIn_then200IsReceived()
+            throws ClientProtocolException, IOException {
+        String employeeRegistration = SampleData.createEmployee(
+                "fantz", "abula", "fant@gmail.com", "4saf2#1-a3"
+        );
+        String employeeLogin = SampleData.loginEmployee("fant@gmail.com", "4saf2#1-a3");
+
+        APIRequest apiRequest = new APIRequest();
+        CloseableHttpResponse loginResponse = apiRequest.login(
+               "http://localhost:5000/api/v1/auth/register", employeeRegistration,
+                "http://localhost:5000/api/v1/auth/login", employeeLogin
+        );
+        HttpEntity loginEntity = loginResponse.getEntity();
+        JsonObject result = (JsonObject) new JsonParser().parse(EntityUtils.toString(loginEntity));
+
+        assertEquals(loginResponse.getStatusLine().getStatusCode(), 200);
+        assertEquals(result.get("status").getAsInt(), 200);
+        assertEquals(result.get("message").getAsString(), "You have logged in successfully!");
+    }
 }
