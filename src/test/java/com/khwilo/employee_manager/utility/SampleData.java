@@ -21,4 +21,11 @@ public class SampleData {
 
         return employee.toString();
     }
+
+    public static String rolePayload(String roleName) {
+        JsonObject role = new JsonObject();
+        role.addProperty("role", roleName);
+
+        return role.toString();
+    }
 }
