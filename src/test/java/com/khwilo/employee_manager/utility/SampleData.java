@@ -13,4 +13,12 @@ public class SampleData {
 
         return employee.toString();
     }
+
+    public static String loginEmployee(String emailAddress, String password) {
+        JsonObject employee = new JsonObject();
+        employee.addProperty("emailAddress", emailAddress);
+        employee.addProperty("password", password);
+
+        return employee.toString();
+    }
 }
