@@ -16,14 +16,33 @@ public class APIRequest {
         this.client = HttpClients.createDefault();
     }
 
-    public CloseableHttpResponse signUp(String signUpUrl, String userRegistration)
+    public CloseableHttpResponse signUp(String signUpUrl, String employeeRegistration)
             throws ClientProtocolException, IOException {
         HttpPost signUpPost = new HttpPost(signUpUrl);
-        StringEntity signUpEntity = new StringEntity(userRegistration);
+        StringEntity signUpEntity = new StringEntity(employeeRegistration);
         signUpPost.setEntity(signUpEntity);
         signUpPost.setHeader("Accept", "application/json");
         signUpPost.setHeader("Content-type", "application/json");
 
         return this.client.execute(signUpPost);
+    }
+
+    public CloseableHttpResponse login(
+            String signUpUrl, String employeeRegistration, String loginUrl, String employeeLogin)
+            throws ClientProtocolException, IOException {
+        HttpPost signUpPost = new HttpPost(signUpUrl);
+        StringEntity signUpEntity = new StringEntity(employeeRegistration);
+        signUpPost.setEntity(signUpEntity);
+        signUpPost.setHeader("Accept", "application/json");
+        signUpPost.setHeader("Content-type", "application/json");
+        this.client.execute(signUpPost);
+
+        HttpPost loginPost = new HttpPost(loginUrl);
+        StringEntity loginEntity = new StringEntity(employeeLogin);
+        loginPost.setEntity(loginEntity);
+        loginPost.setHeader("Accept", "application/json");
+        loginPost.setHeader("Content-type", "application/json");
+
+        return this.client.execute(loginPost);
     }
 }
