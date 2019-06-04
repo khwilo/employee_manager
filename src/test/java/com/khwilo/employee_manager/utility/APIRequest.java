@@ -45,4 +45,23 @@ public class APIRequest {
 
         return this.client.execute(loginPost);
     }
+
+    public CloseableHttpResponse createRole(
+            String signUpUrl, String employeeRegistration, String createRoleUrl, String rolePayload)
+            throws ClientProtocolException, IOException {
+        HttpPost signUpPost = new HttpPost(signUpUrl);
+        StringEntity signUpEntity = new StringEntity(employeeRegistration);
+        signUpPost.setEntity(signUpEntity);
+        signUpPost.setHeader("Accept", "application/json");
+        signUpPost.setHeader("Content-type", "application/json");
+        this.client.execute(signUpPost);
+
+        HttpPost createRolePost = new HttpPost(createRoleUrl);
+        StringEntity roleEntity = new StringEntity(rolePayload);
+        createRolePost.setEntity(roleEntity);
+        createRolePost.setHeader("Accept", "application/json");
+        createRolePost.setHeader("Content-type", "application/json");
+
+        return this.client.execute(createRolePost);
+    }
 }
