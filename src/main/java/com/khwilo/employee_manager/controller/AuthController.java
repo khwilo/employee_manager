@@ -3,6 +3,7 @@ package com.khwilo.employee_manager.controller;
 import com.khwilo.employee_manager.dao.EmployeeRepository;
 import com.khwilo.employee_manager.model.Employee;
 import com.khwilo.employee_manager.payload.ApiResponse;
+import com.khwilo.employee_manager.payload.LoginRequest;
 import com.khwilo.employee_manager.payload.SignUpRequest;
 import com.khwilo.employee_manager.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,22 @@ public class AuthController {
         return new ResponseEntity<>(
                 new ApiResponse(201, "Employee account creation is successful!"),
                 HttpStatus.CREATED
+        );
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Object> loginEmployee(@Valid @RequestBody LoginRequest loginRequest) {
+        if (!employeeRepository.existsByEmailAddressAndPassword(
+                loginRequest.getEmailAddress(), loginRequest.getPassword())) {
+            return new ResponseEntity<>(
+                    new ApiResponse(401, "Wrong credentials"),
+                    HttpStatus.UNAUTHORIZED
+            );
+        }
+
+        return new ResponseEntity<>(
+                new ApiResponse(200, "You have logged in successfully!"),
+                HttpStatus.OK
         );
     }
 }
