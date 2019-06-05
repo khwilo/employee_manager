@@ -50,6 +50,12 @@ public class EmployeeService {
         );
     }
 
+    public Employee getEmployeeByEmailAddress(String emailAddress) {
+        return employeeRepository.getByEmailAddress(emailAddress).orElseThrow(
+                () -> new AppException("Employee with email '" + emailAddress + "' not found!")
+        );
+    }
+
     public void save(Employee employee) {
         employeeRepository.save(employee);
     }
