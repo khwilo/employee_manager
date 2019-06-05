@@ -33,6 +33,21 @@ public class RoleController {
             );
         }
 
+        if (!employeeRepository.existsByEmailAddress(roleRequest.getEmailAddress())) {
+            return new ResponseEntity<>(
+                    new ApiResponse(404, "Employee not found!"),
+                    HttpStatus.NOT_FOUND
+            );
+        }
+
+        Employee foundEmployee = employeeService.getEmployeeByEmailAddress(roleRequest.getEmailAddress());
+        if (!foundEmployee.isAdmin()) {
+            return new ResponseEntity<>(
+                    new ApiResponse(401, "This action requires admin access!"),
+                    HttpStatus.UNAUTHORIZED
+            );
+        }
+
         Role role = new Role(roleRequest.getRole());
 
         Employee employee = employeeService.getEmployeeById(employeeId);
