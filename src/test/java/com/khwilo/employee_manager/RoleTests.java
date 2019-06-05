@@ -23,11 +23,11 @@ import static org.junit.Assert.*;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class RoleTests {
     @Test
-    public void givenEmployeeExists_whenRoleIsAssigned_then201IsCreated() throws ClientProtocolException, IOException {
+    public void givenEmployeeIsAdmin_whenRoleIsAssigned_then201IsCreated() throws ClientProtocolException, IOException {
         String employeeRegistration = SampleData.createEmployee(
                 "jayza", "zebraa", "jay@tidal.com", "rda2#@as012"
         );
-        String rolePayload = SampleData.rolePayload("Software Engineer");
+        String rolePayload = SampleData.rolePayload("frank@gmail.com", "Software Engineer");
 
         APIRequest apiRequest = new APIRequest();
         CloseableHttpResponse response = apiRequest.createRole(
@@ -40,5 +40,26 @@ public class RoleTests {
         assertEquals(response.getStatusLine().getStatusCode(), 201);
         assertEquals(result.get("status").getAsInt(), 201);
         assertEquals(result.get("message").getAsString(), "Role successfully created!");
+    }
+
+    @Test
+    public void givenEmployeeIsNotAdmin_whenRoleIsAssigned_then401IsCreated()
+            throws ClientProtocolException, IOException {
+        String employeeRegistration = SampleData.createEmployee(
+                "jayza", "zebraa", "jay@tidal.com", "rda2#@as012"
+        );
+        String rolePayload = SampleData.rolePayload("jay@tidal.com", "Software Engineer");
+
+        APIRequest apiRequest = new APIRequest();
+        CloseableHttpResponse response = apiRequest.createRole(
+                "http://localhost:5000/api/v1/auth/register", employeeRegistration,
+                "http://localhost:5000/api/v1/role/create/2", rolePayload
+        );
+        HttpEntity httpEntity = response.getEntity();
+        JsonObject result = (JsonObject) new JsonParser().parse(EntityUtils.toString(httpEntity));
+
+        assertEquals(response.getStatusLine().getStatusCode(), 401);
+        assertEquals(result.get("status").getAsInt(), 401);
+        assertEquals(result.get("message").getAsString(), "This action requires admin access!");
     }
 }

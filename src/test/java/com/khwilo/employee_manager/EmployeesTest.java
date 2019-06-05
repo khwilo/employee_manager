@@ -62,7 +62,7 @@ public class EmployeesTest {
 
     @Test
     public void givenEmployeeRolesDoesExist_whenFetched_then200IsCreated() throws ClientProtocolException, IOException {
-        String rolePayload = SampleData.rolePayload("Line Manager");
+        String rolePayload = SampleData.rolePayload("frank@gmail.com","Line Manager");
 
         APIRequest apiRequest = new APIRequest();
         CloseableHttpResponse getAllEmployeesWithRolesResponse = apiRequest.fetchAllEmployeesWithRoles(
