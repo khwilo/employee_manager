@@ -22,8 +22,9 @@ public class SampleData {
         return employee.toString();
     }
 
-    public static String rolePayload(String roleName) {
+    public static String rolePayload(String adminEmailAddress, String roleName) {
         JsonObject role = new JsonObject();
+        role.addProperty("emailAddress", adminEmailAddress);
         role.addProperty("role", roleName);
 
         return role.toString();
