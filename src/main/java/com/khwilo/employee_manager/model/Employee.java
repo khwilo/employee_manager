@@ -37,7 +37,7 @@ public class Employee {
     @JsonIgnore
     private String password;
 
-
+    @JsonIgnore
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "employee")
     private Role role;
 
