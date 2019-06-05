@@ -68,8 +68,8 @@ public class ItemController {
         itemRepository.save(item);
 
         return new ResponseEntity<>(
-                new ApiResponse(200, itemRequest.getAsset() + " has been successfully been assigned"),
-                HttpStatus.OK
+                new ApiResponse(201, itemRequest.getAsset() + " has been successfully been assigned"),
+                HttpStatus.CREATED
         );
     }
 
