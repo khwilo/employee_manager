@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -30,7 +31,11 @@ public class Item {
     @Temporal(TemporalType.TIMESTAMP)
     Date assignedDate = new Date(Calendar.getInstance().getTime().getTime());
 
+    @NotNull
     private int months;
+
+    @NotNull
+    private int weeksToRenewal;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "employee_id", nullable = false)
@@ -101,5 +106,13 @@ public class Item {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public int getWeeksToRenewal() {
+        return weeksToRenewal;
+    }
+
+    public void setWeeksToRenewal(int weeksToRenewal) {
+        this.weeksToRenewal = weeksToRenewal;
     }
 }
