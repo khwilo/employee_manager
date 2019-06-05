@@ -29,4 +29,14 @@ public class SampleData {
 
         return role.toString();
     }
+
+    public static String itemPayload(String adminEmailAddress, String asset, String account, int months) {
+        JsonObject item = new JsonObject();
+        item.addProperty("adminEmail", adminEmailAddress);
+        item.addProperty("asset", asset);
+        item.addProperty("account", account);
+        item.addProperty("months", months);
+
+        return item.toString();
+    }
 }
