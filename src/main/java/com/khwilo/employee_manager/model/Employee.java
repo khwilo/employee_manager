@@ -37,6 +37,10 @@ public class Employee {
     @JsonIgnore
     private String password;
 
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "employee")
+    private Role role;
+
     public Employee() {
     }
 
@@ -93,5 +97,13 @@ public class Employee {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
