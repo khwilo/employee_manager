@@ -113,4 +113,30 @@ public class APIRequest {
 
         return this.client.execute(getAllEmployeesWithRoles);
     }
+
+    public CloseableHttpResponse assignItems(
+            String signUpUrl, String employeeRegistration, String assignItemsUrl, String itemsPayload)
+            throws ClientProtocolException, IOException {
+        HttpPost signUpPost = new HttpPost(signUpUrl);
+        StringEntity signUpEntity = new StringEntity(employeeRegistration);
+        signUpPost.setEntity(signUpEntity);
+        signUpPost.setHeader("Accept", "application/json");
+        signUpPost.setHeader("Content-type", "application/json");
+        this.client.execute(signUpPost);
+
+        HttpPost assignItemsPost = new HttpPost(assignItemsUrl);
+        StringEntity itemsEntity = new StringEntity(itemsPayload);
+        assignItemsPost.setEntity(itemsEntity);
+        assignItemsPost.setHeader("Accept", "application/json");
+        assignItemsPost.setHeader("Content-type", "application/json");
+
+        return this.client.execute(assignItemsPost);
+    }
+
+    public CloseableHttpResponse fetchAllItems(String fetchItemsUrl) throws ClientProtocolException, IOException {
+        HttpGet fetchItems = new HttpGet(fetchItemsUrl);
+        fetchItems.setHeader("Content-type", "application/json");
+
+        return this.client.execute(fetchItems);
+    }
 }
