@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/api/v1/item")
@@ -56,6 +59,9 @@ public class ItemController {
 
         Employee employee = employeeService.getEmployeeById(employeeId);
 
+        int numberOfWeeks = getWeeksToRenewal(item.getAssignedDate(), itemRequest.getMonths());
+        item.setWeeksToRenewal(numberOfWeeks);
+
         item.setEmployee(employee);
 
         itemRepository.save(item);
@@ -64,5 +70,24 @@ public class ItemController {
                 new ApiResponse(200, itemRequest.getAsset() + " has been successfully been assigned"),
                 HttpStatus.OK
         );
+    }
+
+    public int getWeeksToRenewal(Date assignedDate, int monthsReplacementCycle) {
+        Calendar assignedCalender = Calendar.getInstance();
+        assignedCalender.setTime(assignedDate);
+        assignedCalender.add(Calendar.MONTH, monthsReplacementCycle); // Add months to replace to assigned date
+
+        Date currentDate = new Date(Calendar.getInstance().getTime().getTime());
+        Calendar currentCalender = Calendar.getInstance();
+        currentCalender.setTime(currentDate);
+
+        long expiryTime = assignedCalender.getTime().getTime();
+        long diffInMilliseconds = Math.abs(expiryTime - currentCalender.getTime().getTime());
+        long diff = TimeUnit.DAYS.convert(diffInMilliseconds, TimeUnit.MILLISECONDS);
+
+
+        double numberOfWeeks = Math.floor(diff/7);
+
+        return (int) numberOfWeeks;
     }
 }
