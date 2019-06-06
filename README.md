@@ -26,8 +26,10 @@ $ java -jar target/employee_manager-0.0.1-SNAPSHOT.jar
 ```
 ## API ENDPOINTS
 
-- **Register an employee** - `http://localhost:5000/api/v1/auth/register`
-- **Login an employee** - `http://localhost:5000/api/v1/auth/login`
-- **Fetch all employees** - `http://localhost:5000/api/v1/employees`
-- **Create a role** - `http://localhost:5000/api/v1/role/create/{id}`
-- **Fetch all employees with roles** - `http://localhost:5000/api/v1/employees/roles`
+- **Register an employee** - `/api/v1/auth/register`
+- **Login an employee** - `/api/v1/auth/login`
+- **Fetch all employees** - `/api/v1/employees`
+- **Create a role** - `/api/v1/role/create/{id}`
+- **Fetch all employees with roles** - `/api/v1/employees/roles`
+- **Assign an item to an employee** - `/api/v1/item/assign/{id}`
+- **Fetch items assigned to employees**- `/api/v1/item/all`
